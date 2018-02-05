@@ -1,0 +1,12 @@
+<App>
+    <UserBox>
+
+    </UserBox>
+    <OtherUsersDashboard>
+
+    </OtherUsersDashboard>
+
+    <GoogleMapsShowUsersAroundYou />
+    
+    <ChatBox nickUtente='' idUtente='' />
+</App>

@@ -1,0 +1,38 @@
+{
+  "name": "facciamoqualcosainsieme",
+  "version": "1.0.0",
+  "description": "let's do something togheter - react native application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack -wd --progress --colors --config webpack.config.js && node dist/server.js",
+    "devServer": "webpack -wd --progress --colors --config webpack.config.server.js && node dist/server.js"
+  },
+  "author": "Gennaro Martone",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-async-to-promises": "^1.0.5",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-es2015": "^6.24.0",
+    "babel-preset-react": "^6.24.1",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.9.6"
+  },
+  "dependencies": {
+    "axios": "^0.16.2",
+    "node-sass-middleware": "^0.11.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-helmet": "^5.1.3",
+    "react-redux": "^5.0.6",
+    "react-router-dom": "^4.2.2",
+    "redux": "^3.7.2",
+    "s": "^0.1.1",
+    "socket.io": "^2.0.4",
+    "socket.io-client": "^2.0.4",
+    "webpack-node-externals": "^1.5.4"
+  }
+}
