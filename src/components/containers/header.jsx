@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import LoginModal from './login-modal-container.jsx'
 
 class Header extends Component {
+    
     constructor(props) {
         super(props)
 
@@ -13,6 +14,10 @@ class Header extends Component {
         }
 
         this.setShowLoginModal = this.setShowLoginModal.bind(this);
+    }
+
+    static fetchData({ store }) {
+        return new Promise(resolve => resolve());//default
     }
 
     componentWillMount() {

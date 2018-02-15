@@ -21,15 +21,21 @@ import reducers from './../reducers/rootReducer';
 
 import { StaticRouter as Router, matchPath } from 'react-router';
 
-import thunk from './../middleware/thunk';
+import thunk,{logger} from './../middleware/thunk';
 import routeBank from './../routes/routes';
 
+import db from './../db/db';
+import userController from './../api/userController';
 
 const server = express();
 
 const app = Server(server);
 
 const io = socket(app);
+
+// ADD USER Controller
+server.use('/api/user', userController);
+
 
 //server.use(express.static('public'));
 
@@ -50,7 +56,7 @@ server.get('*', async (req, res) => {
 	try {
 		//create new redux store on each request
 		console.log('NUOVA RICHIESTA')
-		const store = createStore(reducers, {}, applyMiddleware(thunk));
+		const store = createStore(reducers, {}, applyMiddleware(thunk,logger));
 		let foundPath = null;
 		// match request url to our React Router paths and grab component
 		logStars(req.url)
@@ -71,7 +77,11 @@ server.get('*', async (req, res) => {
 			logStars(component)	
 		// safety check for fetchData function, if no function we give it an empty promise
 		if (!component.fetchData)
-			component.fetchData = () => new Promise(resolve => resolve());
+			component.fetchData = () => new Promise((resolve, reject) =>{
+			 if(true) resolve()
+			 else
+			 	reject();
+			});
 		// meat and bones of our isomorphic application: grabbing async data
 		await component.fetchData({ store, params: (foundPath ? foundPath.params : {}) });
 		//get store state (js object of entire store)

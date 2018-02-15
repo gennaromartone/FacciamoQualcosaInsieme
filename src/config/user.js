@@ -4,5 +4,6 @@ export default class User{
         password = null;
         email = null;
         lastLogin = null;
+        token=null;
     }
 }
