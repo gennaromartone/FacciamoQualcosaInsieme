@@ -18,8 +18,6 @@ router.post('/', function (req, res) {
 
     let hashedPassword = bcrypt.hashSync(req.body.password, 8);
 
-    User.pre
-
     User.create({
             username : req.body.username,
             email : req.body.email,
