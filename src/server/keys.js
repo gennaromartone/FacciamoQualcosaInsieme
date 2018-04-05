@@ -8,6 +8,6 @@ if( process.env.NODE_ENV === 'production'){
     
 }else{
     // we are in dev mode
-    module.exports = require('./config/prod');
+    module.exports = require('./config/dev');
 
 }

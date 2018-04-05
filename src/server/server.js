@@ -14,6 +14,10 @@ import {createNamespace} from 'continuation-local-storage'
 // malicious parties from breaking or using an application to hurt its users.
 import helmet from 'helmet'
 
+// Compression comprime the response if the client support compression 
+//reducing the time for the client to show the page
+import compression from 'compression'
+
 import db from './db/db';
 //ROUTES
 import userController from './api/userController';
@@ -47,6 +51,9 @@ server.use(function(req, res, next) {
 
 // ADD HELMET UTILITY
 server.use( helmet() );
+
+// ADD COMPRESSION
+server.use( compression() );
 
 // ADD COOKIE HANDLER
 server.use( cookieSession({
