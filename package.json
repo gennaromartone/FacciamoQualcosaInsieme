@@ -14,7 +14,7 @@
     "devServer": "webpack -wd --progress --colors --config webpack.config.server.js && node dist/server.js",
     "start-dev": "nodemon dist/server.js",
     "heroku-prebuild": "NPM_CONFIG_PRODUCTION=false npm install",
-    "heroku-postbuild": "npm run build",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=true npm run build",
     "start": "node dist/server.js"
   },
   "author": "Gennaro Martone",
