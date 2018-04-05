@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --progress --color --config webpack.prod.js && webpack -wd --progress --colors --config webpack.config.server.js",
+    "build": "webpack --progress --color --config webpack.prod.js && webpack  --progress --colors --config webpack.config.server.js",
     "dev": "webpack -wd --progress --colors --config webpack.dev.js && node dist/server.js",
     "devServer": "webpack -wd --progress --colors --config webpack.config.server.js && node dist/server.js",
     "start-dev": "nodemon dist/server.js",
