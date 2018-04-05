@@ -2,6 +2,8 @@
 const customMiddleware = store => next => action => {
     return isFunction(action) ? action(store.dispatch, store.getState): next(action);
 }
+
+// isFunction(action) ? action(store.dispatch, store.getState): next(action) = customMiddleware(store)(next)(action)
 const isFunction = (action) => {
     return typeof action === 'function';
 }

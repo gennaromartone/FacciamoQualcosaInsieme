@@ -10,15 +10,22 @@ var UserSchema = new mongoose.Schema({
         required: true,
         trim: true
       },
-      username: {
+      f_name: {
         type: String,
-        trim: true
+        trim: true,
+        required: true,
+      },
+      l_name: {
+        type: String,
+        trim: true,
+        required: true,
       },
       password: {
         type: String,
         required: true,
       },   
-    lastLogin: String
+      lastLogin: String,
+      verified: { type:Boolean, default:false}
 
 });
 mongoose.model('User', UserSchema);

@@ -1,10 +1,10 @@
-import User from './../config/user'
+//import User from './../config/user'
 
 export default {
-        user: {
+        auth: {
             isLogginIng: false,
             isLoggedIn: false,
-            user: User,
+            user: '',
             receivedAt: ''
         },
         chat: {

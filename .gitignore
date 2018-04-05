@@ -5,6 +5,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# key
+dev.js
+
 # Runtime data
 pids
 *.pid
@@ -31,6 +34,7 @@ bower_components
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
+dist
 
 .DS_Store
 .vscode

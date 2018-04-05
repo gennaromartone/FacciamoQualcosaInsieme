@@ -1,6 +1,6 @@
-import thunk,{logger} from './../middleware/thunk';
+import thunk,{logger,crashReporter} from './../middleware/thunk';
 
 const middleware = [
-    thunk,logger
+    thunk,logger,crashReporter
 ];
 export default middleware;

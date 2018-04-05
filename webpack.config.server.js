@@ -3,6 +3,7 @@ const nodeExternals = require('webpack-node-externals'),
     srcPath = path.resolve(__dirname),
     distPath = path.resolve(__dirname, 'dist');
 
+
 module.exports = {
     context: srcPath,
     entry: './src/server/server.js',
@@ -23,8 +24,16 @@ module.exports = {
                 use: [{
                     loader: 'babel-loader',
                     options: { presets: ['es2015', 'react'], plugins: ['transform-object-rest-spread'] }
-                }],
-            }
+                }]
+            },
+            
+            
+            /*,
+            {
+              test: /\.js$/,
+              exclude: /node_modules/,
+              use: ['babel-loader','eslint-loader']
+            }*/
             //loaders for other file types can go here
         ]
     },

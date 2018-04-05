@@ -7,25 +7,26 @@ import fs from 'fs';
 import socket from 'socket.io'  
 import { Server } from 'http'
 
+import uuid from 'uuid'
+import {createNamespace} from 'continuation-local-storage'
 
-import React from 'react';
-import ReactDOM from 'react-dom/server';
-import helmet from 'react-helmet';
-import App from './../components/app.jsx'
+// Helmet includes a whopping 11 packages that all work to block 
+// malicious parties from breaking or using an application to hurt its users.
+import helmet from 'helmet'
 
-import { render } from 'react-dom';
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
+import db from './db/db';
+//ROUTES
+import userController from './api/userController';
+import oauthGoogleController from './routes/authGoogleRoutes'
+import renderingController from './routes/renderingRoutes'
+import billingController from './routes/billingRoutes'
+// SERVICES
+import './services/passport';
+// COOKIE HANDLERS
+import cookieSession from 'cookie-session'
+import passport from 'passport'
 
-import reducers from './../reducers/rootReducer';
-
-import { StaticRouter as Router, matchPath } from 'react-router';
-
-import thunk,{logger} from './../middleware/thunk';
-import routeBank from './../routes/routes';
-
-import db from './../db/db';
-import userController from './../api/userController';
+import keys from './keys'
 
 const server = express();
 
@@ -33,84 +34,52 @@ const app = Server(server);
 
 const io = socket(app);
 
+// CREATE A NAME SPACE FOR REQUEST
+const myRequest = createNamespace('my request');
+
+// Run the context for each request. Assign a unique identifier to each request
+server.use(function(req, res, next) {
+  myRequest.run( () => {
+      myRequest.set('reqId', uuid.v1());
+      next();
+  });
+});
+
+// ADD HELMET UTILITY
+server.use( helmet() );
+
+// ADD COOKIE HANDLER
+server.use( cookieSession({
+
+		maxAge: 24 * 60 * 60 * 1000, // One Day expiration time for the cookie
+		keys: [keys.cookie.cookieKey] // allow us to specifies multiple keys for major secutity
+}))
+server.use( passport.initialize() )
+server.use( passport.session() )
+
+// ADD Server Rendering Controller
+server.use('', renderingController);
+
+// ADD O-AUTH GOOGLE Controller
+server.use('/auth/google', oauthGoogleController);
+
 // ADD USER Controller
 server.use('/api/user', userController);
 
+// ADD BILLING CONTROLLER
+server.use('/api', billingController);
 
-//server.use(express.static('public'));
-
-//server.use('/public', express.static('./public'));
-
-/*server.use(sassMiddleware({
-  src: path.join( __dirname, '../sass'),
-  dest: path.join( __dirname, 'dist')
-})); */
-
+// STATIC RESOURCES
 server.use('/dist', express.static('./dist'));
 
- 
+if( process.env.NODE_ENV === 'production'){
 
-/* Gestione Render Prima Richiesta in REACT + REDUX */
+  // FOR EVERY ROUTES THAT EXPRESS DOESN'T RECOGNIZE THE ROUTES RETURN INDEX.HTML
+  server.get('*', (req,res) => {
+    res.redirect('/');
+  })
+}
 
-server.get('*', async (req, res) => {
-	try {
-		//create new redux store on each request
-		console.log('NUOVA RICHIESTA')
-		const store = createStore(reducers, {}, applyMiddleware(thunk,logger));
-		let foundPath = null;
-		// match request url to our React Router paths and grab component
-		logStars(req.url)
-		let { path, component } = routeBank.routes.find(
-			({ path, exact }) => {
-				foundPath = matchPath(req.url,
-					{
-						path,
-						exact,
-						strict: false
-					}
-				)
-				return foundPath;
-			}) || {};
-		// safety check for valid component, if no component we initialize an empty shell.
-		if (!component)
-			component = {};
-			logStars(component)	
-		// safety check for fetchData function, if no function we give it an empty promise
-		if (!component.fetchData)
-			component.fetchData = () => new Promise((resolve, reject) =>{
-			 if(true) resolve()
-			 else
-			 	reject();
-			});
-		// meat and bones of our isomorphic application: grabbing async data
-		await component.fetchData({ store, params: (foundPath ? foundPath.params : {}) });
-		//get store state (js object of entire store)
-		let preloadedState = store.getState();
-		//context is used by react router, empty by default
-		let context = {};
-		const html = ReactDOM.renderToString(
-			<Provider store={store}>
-				<Router context={context} location={req.url}>
-					<App />
-				</Router>
-			</Provider>
-		)
-		//render helmet data aka meta data in <head></head>
-		const helmetData = helmet.renderStatic();
-		//check context for url, if url exists then react router has ran into a redirect
-		if (context.url)
-			//process redirect through express by redirecting
-			res.redirect(context.status, 'http://' + req.headers.host + context.url);
-		else if (foundPath && foundPath.path == '/404')
-			//if 404 then send our custom 404 page with initial state and meta data, this is needed for status code 404
-			res.status(404).send(renderFullPage(html, preloadedState, helmetData))
-		else
-			//else send down page with initial state and meta data
-			res.send(renderFullPage(html, preloadedState, helmetData))
-	} catch (error) {
-		res.status(400).send(renderFullPage('An error occured.', {}, {}));
-	}
-});
 
 io.on('connection', function(socket) {  
   console.log('a user connected');
@@ -135,34 +104,4 @@ app.listen(config.port, config.host, () => {
 		logStars(path.join( __dirname, '../sass'));
   });
 
-  function renderFullPage(html, preloadedState, helmet) {
-		logStars(html);
-    return `
-      <html>
-				<head>
-				<meta charset="utf-8">
-				<title>React Chat App</title>
-				<link rel="stylesheet" href="/dist/assets/style.css">
-				<link rel="icon" href="/dist/favicon.ico" type="image/ico" />
-				<!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css"--> 
-        
-          ${helmet.title.toString()}
-          ${helmet.meta.toString()}
-					${helmet.link.toString()}
-					<script src="/socket.io/socket.io.js"></script>
-					<script>
-						var socket = io();
-					</script>
-        </head>
-        <body>
-          <div id="root">${html}</div>
-          <script>
-            // WARNING: See the following for security issues around embedding JSON in HTML:
-            // http://redux.js.org/docs/recipes/ServerRendering.html#security-considerations
-            window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}
-          </script>
-          <script src="/dist/assets/bundle.js"></script>
-        </body>
-      </html>
-      `
-  }
+  

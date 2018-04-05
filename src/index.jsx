@@ -2,6 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 //import App from './components/App';
 
+//import 'materialize-css/dist/css/materialize.css'
+import './../sass/style.scss'
+import './../sass/header.scss'
 import store from './store/configureStore'
 import { Provider } from 'react-redux'
 
@@ -23,3 +26,5 @@ ReactDOM.render(
 );
 
 registerServiceWorker();
+
+console.log('ENVIROMENT is: ',process.env.REACT_APP_STRIPE_KEY)

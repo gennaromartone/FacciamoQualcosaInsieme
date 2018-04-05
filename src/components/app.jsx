@@ -6,7 +6,14 @@ import Header from './containers/header.jsx'
 import Footer from './containers/Footer'
 import routeOptions from '../routes/routes';
 
-export default class componentName extends Component {
+import {connect} from 'react-redux'
+import * as actions from './../actions/auth'
+
+class App extends Component {
+
+    componentDidMount(){
+        this.props.fetchUser();
+    }
 
     render() {
 
@@ -17,7 +24,7 @@ export default class componentName extends Component {
         return (
             
             <div className="container">
-                <Header />
+                <Header/>
                 <Switch>
                     {routes}
                 </Switch>
@@ -26,4 +33,6 @@ export default class componentName extends Component {
         )
     }
 }
+
+export default connect(null, actions)(App)
 

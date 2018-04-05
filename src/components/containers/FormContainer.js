@@ -82,7 +82,7 @@ class FormContainer extends Component {
     }
 
     handleChange(ev){
-        console.log( ev.target.id.substring(0,5) );
+        //console.log( ev.target.id.substring(0,5) );
         this.setState({
            [ev.target.id]: ev.target.value
         })

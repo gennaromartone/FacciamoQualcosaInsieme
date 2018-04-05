@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import FormContainer from './FormContainer'
+import Landing from './Landing'
 
 
 
@@ -12,7 +12,7 @@ export default class Home extends Component {
     render() {
         return (
             <div className="content">
-               <FormContainer /> 
+               <Landing /> 
                 
             </div>
         )

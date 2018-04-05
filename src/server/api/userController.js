@@ -19,7 +19,8 @@ router.post('/', function (req, res) {
     let hashedPassword = bcrypt.hashSync(req.body.password, 8);
 
     User.create({
-            username : req.body.username,
+            f_name : req.body.firstName,
+            l_name : req.body.lastName,
             email : req.body.email,
             password : hashedPassword,
             lastLogin : Date.now()
@@ -31,7 +32,7 @@ router.post('/', function (req, res) {
                 expiresIn: 86400 // expires in 24 hours
               });
             
-            res.status(200).send({user:user, token: token}).redirect('/profile');
+            res.status(200).send({user:user, token: token}).redirect('/');
         });
 
 
@@ -69,5 +70,10 @@ router.put('/:id', function (req, res) {
         res.status(200).send(user);
     });
 });
+
+router.get('/current_user', (req,res,done) => {
+    res.send( req.user );
+})
+
 
 export default router;
