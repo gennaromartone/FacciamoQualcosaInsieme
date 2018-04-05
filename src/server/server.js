@@ -101,7 +101,7 @@ server.use(express.static('public'));
 app.listen(config.port, config.host, () => {
 
 		console.info('Express listening on port', config.port);
-		logStars(path.join( __dirname, '../sass'));
+		logStars('Running in: '+ process.env.NODE_ENV);
   });
 
   

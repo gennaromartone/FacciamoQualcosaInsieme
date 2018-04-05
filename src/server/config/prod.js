@@ -16,16 +16,5 @@ export default {
         secretkey: process.env.SECRET_KEY,
       }
 };
-  /* google:{
-        clientID:'967485044069-ehmqe5hgjkgk8tmmqk69rov3k8luicgg.apps.googleusercontent.com',
-        clientSecret:'tXcMUR0POg2uxevfJOizTFFi',
-        callbackURL: '/auth/google/callback'
-    },
-    mongoDB:{
-        mongoURI:'mongodb://localhost/delivery-shop'
-    },
-    cookie:{
-        cookieKey:'sdgsdgquelcheczzomiparejsdfsdfsdfs'
-    }
-}*/
+  
 
