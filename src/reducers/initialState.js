@@ -1,6 +1,7 @@
 //import User from './../config/user'
 
 export default {
+        isFetching: false,
         auth: {
             isLogginIng: false,
             isLoggedIn: false,

@@ -25,7 +25,8 @@ var UserSchema = new mongoose.Schema({
         required: true,
       },   
       lastLogin: String,
-      verified: { type:Boolean, default:false}
+      verified: Boolean,
+      credits: { type:Number, default:0}
 
 });
 mongoose.model('User', UserSchema);

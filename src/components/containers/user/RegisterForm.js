@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
 import {reduxForm, Field} from 'redux-form';
+import {withRouter} from 'react-router-dom'
 
 import InputField from './../../presentetional/InputField'
 
@@ -16,6 +17,8 @@ class RegisterForm extends Component {
   renderFields(){
 
     return FIELDS.map( ({label, name}) => {
+      if( name === 'password')
+        return <Field key={name} label={label} component={InputField} type="password" name={name} />
       return <Field key={name} label={label} component={InputField} type="text" name={name} />
     })
 
@@ -25,7 +28,7 @@ class RegisterForm extends Component {
 
     return (
 
-      <form onSubmit={this.props.handleSubmit(values => console.log(values))}>
+      <form onSubmit={this.props.handleSubmit(values => this.props.onSubmitForm(values,this.props.history))}>
 
         {this.renderFields()}
 
@@ -60,6 +63,6 @@ const validate = (values) => {
 }
 
 export default reduxForm({
-  validate, // ES& is validate:validate
+  validate, // ES6 is validate:validate
   form: 'registerForm',
-})(RegisterForm);
+})(withRouter(RegisterForm));

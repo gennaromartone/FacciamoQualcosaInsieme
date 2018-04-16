@@ -6,6 +6,7 @@ import User from './../db/userDb'
 import jwt from'jsonwebtoken';
 import bcrypt from'bcryptjs';
 import config from'./../config/config';
+import logger from './../config/logger'
 
 var router = express.Router();
 
@@ -14,7 +15,7 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
 // CREATES A NEW USER
-router.post('/', function (req, res) {
+router.post('/register', function (req, res) {
 
     let hashedPassword = bcrypt.hashSync(req.body.password, 8);
 
@@ -23,16 +24,20 @@ router.post('/', function (req, res) {
             l_name : req.body.lastName,
             email : req.body.email,
             password : hashedPassword,
+            verified : false,
             lastLogin : Date.now()
         }, 
         function (err, user) {
-            if (err) return res.status(500).send("There was a problem adding the information to the database.");
+            if (err) {
+                logger.info('errore: '+err)
+                return res.status(500).send("There was a problem adding the information to the database.");
+            }
             
             var token = jwt.sign({ id: user._id }, config.secret, {
                 expiresIn: 86400 // expires in 24 hours
               });
             
-            res.status(200).send({user:user, token: token}).redirect('/');
+            res.status(200).send({user:user, token: token});
         });
 
 
@@ -56,9 +61,10 @@ router.get('/:id', function (req, res) {
 
 // DELETES A USER FROM THE DATABASE
 router.delete('/:id', function (req, res) {
+    logger.info('dentro la delete')
     User.findByIdAndRemove(req.params.id, function (err, user) {
         if (err) return res.status(500).send("There was a problem deleting the user.");
-        res.status(200).send("User "+ user.name +" was deleted.");
+        res.status(200).send("User "+ user.f_name +" was deleted.");
     });
 });
 

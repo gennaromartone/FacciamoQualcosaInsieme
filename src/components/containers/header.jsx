@@ -190,6 +190,9 @@ class Header extends Component {
     */
 
     render() {
+
+        const login = this.state.showLoginModal
+        const register = this.state.showRegisterModal
       
         return(
           <div className="main-header" >
@@ -200,8 +203,8 @@ class Header extends Component {
             
           
 
-            {true && <LoginModal show={this.state.showLoginModal} onClose={this.setShowLoginModal} />}
-            <RegisterModal show={this.state.showRegisterModal} onClose={this.setShowRegisterModal} />
+            {login && <LoginModal show={this.state.showLoginModal} onClose={this.setShowLoginModal} />}
+            {register && <RegisterModal show={this.state.showRegisterModal} onClose={this.setShowRegisterModal} />}
           </header>
           </div>
           );
