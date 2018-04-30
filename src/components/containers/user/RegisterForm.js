@@ -25,14 +25,20 @@ class RegisterForm extends Component {
   }
 
   render() {
-
+    const stile = {textAlign:'center',width:'100%'}
+    const { isFetching } = this.props
+    console.log('RITORNA in PROPS: '+isFetching)
     return (
 
       <form onSubmit={this.props.handleSubmit(values => this.props.onSubmitForm(values,this.props.history))}>
 
         {this.renderFields()}
 
-        <button className="form--botton" type="submit"><span>Registrati</span></button>
+        {isFetching &&  <div style={stile}>
+          <button className="form--botton form--botton__spinning" type="submit"><span>Registering...</span></button></div>}
+        {!isFetching &&  <div style={stile}>
+          <button className="form--botton" type="submit"><span>Register</span></button></div>}
+       
       </form>
     );
   }

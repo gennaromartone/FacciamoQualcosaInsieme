@@ -70,12 +70,12 @@ class RegisterModal extends Component{
 
                 <div className="hr"><span >oppure</span></div>
      
-                <RegisterForm onSubmitForm={this.props.registerUser}/>
+                <RegisterForm isFetching={this.props.isFetching} onSubmitForm={this.props.registerUser}/>
 
                 
                 <div>Hai gi&agrave; un account? <a href="#">Accedi </a></div>
 
-                <button onClick={this.props.onClose} className="overlay-close">
+                <button  onClick={this.props.onClose} className="overlay-close">
                 X
                 </button>
             </div>
@@ -86,12 +86,14 @@ class RegisterModal extends Component{
 }
 
 const mapStateToProps = (state, ownProps) => {
+    const { isFetching } = state
+console.log('RITORNA: ',state)
     return {
-        formValues : state.form.registerForm.values
+        isFetching:state.auth.isFetching
     }
 }
 
-export default connect(null,actions)(RegisterModal)
+export default connect(mapStateToProps,actions)(RegisterModal)
 
 RegisterModal.propTypes = {
   onClose: PropTypes.func.isRequired,

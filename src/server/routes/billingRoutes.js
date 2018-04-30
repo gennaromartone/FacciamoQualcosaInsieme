@@ -5,7 +5,7 @@ import stripe from 'stripe'
 
 import keys from './../keys'
 
-import {requireLogin} from './../middlewares/requireLogin' 
+import {requireLogin} from './../middlewares/require' 
 
 const stripeHandler = stripe(keys.stripe.secretkey)
 

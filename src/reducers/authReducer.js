@@ -3,20 +3,25 @@ import { LOGIN,
 LOGOUT,
 RECEIVE_LOGIN, FETCH_USER } from './../actions/auth' 
 
+import * as fetch from './../actions/fetchingAction'
+
 import {REGISTER_USER_BY_FORM} from './../actions/userRegistration'
 
 import initialState from './initialState'
 
-function authReducer(state = null, action){
+function authReducer(state = {isFetching:false}, action){
     switch (action.type) {
         case FETCH_USER:
             return action.payload || false
 
         case REGISTER_USER_BY_FORM:
-            return action.payload
+            return {...state, isFetching: false, user:action.payload}
 
-        case REQUEST_LOGIN:
-            return {...state, isLogginIng:true}
+        case fetch.FETCHING_START:
+            return {...state, isFetching:true}
+
+            /* GESTIRE ERRO SU REDUCERS GENERALE */
+
 
         case RECEIVE_LOGIN:
 

@@ -24,11 +24,14 @@ import userController from './api/userController';
 import oauthGoogleController from './routes/authGoogleRoutes'
 import renderingController from './routes/renderingRoutes'
 import billingController from './routes/billingRoutes'
+import surveyController from './routes/surveyRoutes'
 // SERVICES
 import './services/passport';
 // COOKIE HANDLERS
 import cookieSession from 'cookie-session'
 import passport from 'passport'
+
+
 
 import keys from './keys'
 
@@ -48,6 +51,13 @@ server.use(function(req, res, next) {
       next();
   });
 });
+
+// Check if there is an error for every request - TO DO
+/*server.use( (err,req,res,next) => {
+  if( err ){
+
+  }
+})*/
 
 // ADD HELMET UTILITY
 server.use( helmet() );
@@ -75,6 +85,9 @@ server.use('/api/user', userController);
 
 // ADD BILLING CONTROLLER
 server.use('/api', billingController);
+
+// ADD SURVEY CONTROLLER
+server.use('/api/survey', surveyController)
 
 // STATIC RESOURCES
 server.use('/dist', express.static('./dist'));

@@ -12,5 +12,5 @@ export const  fetchingStop = () =>{
 }
 
 export const thereIsAnError = () =>{
-    return{tupe: ERROR}
+    return{type: ERROR}
 }

@@ -1,16 +1,23 @@
 import axios from 'axios'
-import fetchingAction from './fetchingAction'
+import * as fetchingAction from './fetchingAction'
 
 export const REGISTER_USER_BY_FORM='REGISTER_USER_BY_FORM'
 
 export const registerUser = (values,history) => async dispatch => {
 
-    dispatch(fetching);
+    dispatch(fetchingAction.fetchingNow());
 
-    const register = await axios.post('/api/user/register', values);
+    try{
+        const register = await axios.post('/api/user/register', values);
 
-    history.push('/');
+        history.push('/');
+        
+        dispatch({ type:REGISTER_USER_BY_FORM, payload: register.data})
+    }
+    catch(err){
 
-    dispatch({ type:REGISTER_USER_BY_FORM, payload: register.data})
+        dispatch( { type:fetchingAction.ERROR, error:err} )
+    }
+    
 
 }

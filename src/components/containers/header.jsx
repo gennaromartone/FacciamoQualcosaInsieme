@@ -204,6 +204,7 @@ class Header extends Component {
           
 
             {login && <LoginModal show={this.state.showLoginModal} onClose={this.setShowLoginModal} />}
+            
             {register && <RegisterModal show={this.state.showRegisterModal} onClose={this.setShowRegisterModal} />}
           </header>
           </div>

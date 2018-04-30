@@ -4,6 +4,7 @@ import { Switch, Link, Route } from 'react-router-dom';
 //import RedirectWithStatus from './redirect-w-status.jsx';
 import Header from './containers/header.jsx'
 import Footer from './containers/Footer'
+import HeaderMessages from './containers/headerMessages/HeaderMessages'
 import routeOptions from '../routes/routes';
 
 import {connect} from 'react-redux'
@@ -22,13 +23,16 @@ class App extends Component {
         );
         
         return (
-            
+            <div>
+            <HeaderMessages />
             <div className="container">
+                
                 <Header/>
                 <Switch>
                     {routes}
                 </Switch>
                 <Footer/>
+            </div>
             </div>
         )
     }

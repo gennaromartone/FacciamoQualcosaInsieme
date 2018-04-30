@@ -1,6 +1,11 @@
 @import 'themeColors';
 $theme-font: verdana, sans-serif;
 
+$base:#ffffff;
+$color:silver;
+$accent:#27ae60;
+$borderRadius:4px;
+
 /*body {
   font: $theme-font;
   background-color: $themeColor-Light;
@@ -113,10 +118,11 @@ $theme-font: verdana, sans-serif;
     position: relative;
     display: inline-block;
     text-align: center;
-    width: 100%;
+    width: 60%;
     font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto,
       'Helvetica Neue', sans-serif;
     font-size: 18px;
+    font-weight: 400;
     line-height: 22px;
     padding: 10px 16px;
     min-width: 77.6656px;
@@ -127,7 +133,70 @@ $theme-font: verdana, sans-serif;
     background: rgba(85, 172, 238, 1) !important;
     color: white;
     overflow-x: auto;
+
+    &__spinning {
+        background-color: $base;
+        padding-right: 40px;
+    }
+    /*&__spinning:after {
+        content: '';
+        position: absolute;
+        right: 6px;
+        top: 50%;
+        width: 0;
+        height: 0;
+        box-shadow: 0px 0px 0 1px $base;
+        position: absolute;
+        border-radius: 50%;
+        animation: rotate360 .5s infinite linear, exist .1s forwards ease;
+    }*/
+    
+    &__spinning:before {
+        content: "";
+        width: 0px;
+        height: 0px;
+        border-radius: 50%;
+        left: 15px;
+        top: 45%;
+        position: absolute;
+        border: 3px solid $base;
+        border-right: 3px solid transparent;
+        animation: rotate360 .8s infinite linear, exist .1s forwards ease ;
+        
+    }
   }
+
+@keyframes rotate360 { 
+    50% {
+        transform: rotate(270deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+@keyframes exist { 
+    100% {
+        width: 15px;
+        height: 15px;
+        margin: -8px 5px 0 0;
+    }
+}  
+
+.spinning {
+    animation: spin 1s infinite linear;
+    -webkit-animation: spin2 1s infinite linear;
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg); }
+    to { transform: scale(1) rotate(360deg); }
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+}
+
 }
 /* HOW TO USE SASS in BLOCK-ELEMENT-MODIFIER
 .block {

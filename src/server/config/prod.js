@@ -14,7 +14,10 @@ export default {
       stripe: {
         publishableKey: process.env.PUBLISHABLE_KEY,
         secretkey: process.env.SECRET_KEY,
-      }
+      },
+      sendGrid:{
+        key: process.env.SEND_GRID_KEY
+    }
 };
   
 
