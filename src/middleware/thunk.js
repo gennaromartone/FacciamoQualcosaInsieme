@@ -1,6 +1,6 @@
 
 const customMiddleware = store => next => action => {
-  console.info('IN THUNK: ', action)
+  //console.info('IN THUNK: ', action)
     return isFunction(action) ? action(store.dispatch, store.getState): next(action);
 }
 

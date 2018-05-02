@@ -217,7 +217,7 @@ Header.propTypes = {
 }
 
 const mapStateToProps = ({auth}) => { 
-    console.log(auth)
+    //console.log(auth)
     return {auth} 
 }
 

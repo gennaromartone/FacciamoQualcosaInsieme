@@ -25,6 +25,7 @@ import oauthGoogleController from './routes/authGoogleRoutes'
 import renderingController from './routes/renderingRoutes'
 import billingController from './routes/billingRoutes'
 import surveyController from './routes/surveyRoutes'
+import shoopCategoriesController from './routes/shoopCategoriesRoutes'
 // SERVICES
 import './services/passport';
 // COOKIE HANDLERS
@@ -88,6 +89,9 @@ server.use('/api', billingController);
 
 // ADD SURVEY CONTROLLER
 server.use('/api/survey', surveyController)
+
+// ADD SHOOP CATEGORIES CONTROLLER
+server.use('', shoopCategoriesController)
 
 // STATIC RESOURCES
 server.use('/dist', express.static('./dist'));

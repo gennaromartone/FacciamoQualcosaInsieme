@@ -5,6 +5,7 @@ $base:#ffffff;
 $color:silver;
 $accent:#27ae60;
 $borderRadius:4px;
+$website:rgba(85, 172, 238, 1);
 
 /*body {
   font: $theme-font;
@@ -39,13 +40,71 @@ $borderRadius:4px;
   }
 }
 
+/*  ICON  */
+.locate-me2{
+    width: 20px;
+    cursor: pointer;
+}
+
+.locate-me{
+    top: 0;
+    right: 0;
+    z-index: 10;
+    position: absolute;
+    cursor: pointer;
+    width: 40px;
+    height: 44px;
+    text-align: center;
+}
+
+.locate-me::before{
+    display: inline-block;
+    font-family: Ionicons;
+    speak: none;
+    font-style: normal;
+    font-weight: 400;
+    font-variant: normal;
+    text-transform: none;
+    text-rendering: auto;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color:blue;
+    font-size: 16px;
+    content: '\f2e9';
+    line-height: 44px;
+    text-align: center;
+    display: inline-block;
+}
+
 .form {
   &--field {
     margin: 2rem 0 0 0;
     font-size: 16px;
     position: relative;
     padding: 0;
+
+    &__botton{
+        width: 10%;
+        display: inline-flex;
+    }
   }
+
+  &--field__landing {
+    margin: 2rem 2rem 0 0;
+    font-size: 16px;
+    position: relative;
+    padding: 0;
+    width: 20%;
+    display: inline-flex;
+  }
+
+  &--span__arrow{
+    position: absolute;
+    right: 0;
+    top: 9;
+  }
+
   &--login {
     background-color: #ffffff !important;
     font-family: 'Open Sans Condensed', sans-serif, sans-serif;
@@ -76,6 +135,41 @@ $borderRadius:4px;
     width: 100%;
     font-size: 1rem;
     transition: all 0.3s;
+
+    &--select{
+        cursor: pointer;
+    }
+
+    &--select:focus + .form--dropdownContent{
+        display: block;
+    }
+  }
+
+  &--dropdownContent {
+    display: none;
+    position: absolute;
+    background-color: #ffffff;
+    min-width: 100%;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    top: 35;
+    left: -1;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  &--dropdownContent ul{
+    margin: 5px;
+    text-align: left;
+    padding: 5px;
+  }
+
+  &--dropdownContent li{
+    cursor: pointer
+  }
+
+  &--dropdownContent li:hover{
+    color:$website;
   }
 
   &--input:focus + .form--label {
@@ -112,13 +206,17 @@ $borderRadius:4px;
     margin: 0px !important;
   }
 
+  &--botton span{
+      display: inline-flex
+  }
+
   &--botton {
     margin-top: 20px;
     cursor: pointer;
     position: relative;
     display: inline-block;
     text-align: center;
-    width: 60%;
+    width: 100%;
     font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto,
       'Helvetica Neue', sans-serif;
     font-size: 18px;
@@ -133,6 +231,8 @@ $borderRadius:4px;
     background: rgba(85, 172, 238, 1) !important;
     color: white;
     overflow-x: auto;
+
+    
 
     &__spinning {
         background-color: $base;
@@ -165,6 +265,8 @@ $borderRadius:4px;
         
     }
   }
+
+
 
 @keyframes rotate360 { 
     50% {
@@ -287,8 +389,9 @@ body {
 }*/
 
 .content {
+    margin: 30 0 50 0;
     grid-row: 2;
-    grid-column: 1 / -1;
+    grid-column: 2 / 12;
     overflow-y: auto;
     align-items: center;
     text-align: center;

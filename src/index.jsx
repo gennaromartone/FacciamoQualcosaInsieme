@@ -15,8 +15,8 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import App from './components/app.jsx';
 
 //FOR TEST
-import axios from 'axios'
-window.axios = axios
+//import axios from 'axios'
+//window.axios = axios
 
 ReactDOM.render(
   <Provider store={store} >

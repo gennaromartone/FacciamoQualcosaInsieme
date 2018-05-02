@@ -1,11 +1,11 @@
 import initialState from './initialState'
 
-function searchReducer( state=initialState.resultSetFormSearch, action){
+function searchReducer( state={}, action){
     
     switch (action.type) {
         case 'SEARCH_CATEGORIES_ACTION':
-            
-            break;
+            return {...state, categories:action.categories}
+           
     
         default:
             return state;
