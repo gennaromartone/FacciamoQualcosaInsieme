@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import loadJs from 'loadjs'
 
 import * as searchCategories from './../../actions/searchAction';
 
@@ -11,7 +12,59 @@ export class Landing extends Component {
   componentDidMount(){
 
       this.props.searchCategories();
+      loadJs('https://maps.googleapis.com/maps/api/js?key=AIzaSyCLUAPuBKZg-2A1zUIZV3mt8l4il4t7p6g&libraries=places','handleInputLocate');
+      loadJs.ready('handleInputLocate',this.handleInputLocate);
 
+  }
+
+  handleInputLocate(){
+    console.log('LIBRERIA CARICATA');
+
+    const input = document.getElementById('locate');
+    const autocomplete = new google.maps.places.Autocomplete(input);
+
+  }
+
+  handleLocateMe(){
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        const pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+       // document.getElementById('locate').value=pos;
+        console.log('POSITION: ',position);
+        const geocoder = new google.maps.Geocoder;
+
+        const latlng = {lat: pos.lat, lng: pos.lng};
+        geocoder.geocode({'location': latlng}, function(results, status) {
+          if (status === 'OK') {
+            if (results[0]) {
+             /* map.setZoom(11);
+              var marker = new google.maps.Marker({
+                position: latlng,
+                map: map
+              });
+              infowindow.setContent(results[0].formatted_address);
+              infowindow.open(map, marker); */
+              document.getElementById('locate').value=results[0].formatted_address;
+            } else {
+              window.alert('No results found');
+            }
+          } else {
+            window.alert('Geocoder failed due to: ' + status);
+          }
+        });
+
+      }, function() {
+       // handleLocationError(true, infoWindow, map.getCenter());
+       console.log('Error: The Geolocation service failed.')
+      });
+    } else {
+      // Browser doesn't support Geolocation
+      //handleLocationError(false, infoWindow, map.getCenter());
+      console.log('Error: Your browser doesn\'t support geolocation.')
+    }
   }
 
   render() {
@@ -30,15 +83,18 @@ export class Landing extends Component {
           </div>
 
           <div className="form--field__landing">
-            <input name="lookFor" placeholder="Location" type="text" className="form--input" />
+            <input id="locate" name="locate" placeholder="Location" type="text" className="form--input" />
             <span className="form--span__arrow">
-              <img className="locate-me2" alt="Find Me" src="/images/maps/locate-me.svg"></img>
+              <img onClick={this.handleLocateMe} className="locate-me2" alt="Find Me" src="/images/maps/locate-me.svg"></img>
             </span>
            
           </div>
 
           <div className="form--field__landing">
-            <SelectInput name="lookFor" placeHolder="All Shops Category" categories={this.props.categories} />
+            <SelectInput 
+              name="lookFor" 
+              placeHolder="All Shops Category" 
+              categories={this.props.categories} />
           </div>
 
           <div className="form--field form--field__botton">

@@ -25,16 +25,17 @@ import oauthGoogleController from './routes/authGoogleRoutes'
 import renderingController from './routes/renderingRoutes'
 import billingController from './routes/billingRoutes'
 import surveyController from './routes/surveyRoutes'
-import shoopCategoriesController from './routes/shoopCategoriesRoutes'
+import shoopCategoriesController from './routes/shoopCategoriesRoutes';
+import shoopsController from './routes/shoopsRouter';
 // SERVICES
 import './services/passport';
 // COOKIE HANDLERS
-import cookieSession from 'cookie-session'
-import passport from 'passport'
+import cookieSession from 'cookie-session';
+import passport from 'passport';
 
 
 
-import keys from './keys'
+import keys from './keys';
 
 const server = express();
 
@@ -72,8 +73,8 @@ server.use( cookieSession({
 		maxAge: 24 * 60 * 60 * 1000, // One Day expiration time for the cookie
 		keys: [keys.cookie.cookieKey] // allow us to specifies multiple keys for major secutity
 }))
-server.use( passport.initialize() )
-server.use( passport.session() )
+server.use( passport.initialize() );
+server.use( passport.session() );
 
 // ADD Server Rendering Controller
 server.use('', renderingController);
@@ -88,10 +89,13 @@ server.use('/api/user', userController);
 server.use('/api', billingController);
 
 // ADD SURVEY CONTROLLER
-server.use('/api/survey', surveyController)
+server.use('/api/survey', surveyController);
 
 // ADD SHOOP CATEGORIES CONTROLLER
-server.use('', shoopCategoriesController)
+server.use('', shoopCategoriesController);
+
+// ADD SHOOPS CONTROLLER
+server.use('', shoopsController);
 
 // STATIC RESOURCES
 server.use('/dist', express.static('./dist'));
@@ -101,8 +105,8 @@ if( process.env.NODE_ENV === 'production'){
   // FOR EVERY ROUTES THAT EXPRESS DOESN'T RECOGNIZE THE ROUTES RETURN INDEX.HTML
   server.get('*', (req,res) => {
     res.redirect('/');
-  })
-}
+  });
+};
 
 
 io.on('connection', function(socket) {  

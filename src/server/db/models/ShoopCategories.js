@@ -8,5 +8,5 @@ const ShoopCategories = new mongoose.Schema({
 
 })
 
-mongoose.model('shoopCategories', ShoopCategories);
-export default mongoose.model('shoopCategories');
+mongoose.model('ShoopCategories', ShoopCategories);
+export default mongoose.model('ShoopCategories');
