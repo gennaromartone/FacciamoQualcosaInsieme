@@ -33,6 +33,13 @@ import './services/passport';
 import cookieSession from 'cookie-session';
 import passport from 'passport';
 
+// Grab the options we want to use.
+// These default options will take close to, but not more than, 100ms to compute a hash.
+// The first run of getMaxOptions() takes a while (~5s on my laptop) so you should
+// call it at startup, not when the first password hash request comes in.
+// Subsequent calls use a cache.
+import * as getHaragonOpt from './api/getHaragonOptimization'
+getHaragonOpt.get();
 
 
 import keys from './keys';

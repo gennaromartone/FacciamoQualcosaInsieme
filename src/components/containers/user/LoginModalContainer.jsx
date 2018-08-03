@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
+import {Redirect} from 'react-router-dom'
+
 
 //import './../../../sass/style.scss'
 
@@ -78,43 +80,62 @@ export default class LoginModal extends Component {
 
   render() {
     // Render nothing if the "show" prop is false
+    const stile = {textAlign:'center',width:'100%'}
+    const isFetching = false;
+    const redirect = () => {
+      window.location.href = '/auth/google'
+    }
     if (!this.props.show) {
       return null;
     }
 
-    return (
-      <div>
+    return <div>
         <div className="overlay" onClick={this.props.onClose} />
-           <div className="form"> 
-            <div className="form--login">
-              <div className="form--title"><span>Accedi per proseguire</span></div>
-
-             
-                <div className="form--field">
-                  <input id="password" type="password" className="form--input" />
-                  <label className="form--label" htmlFor="password">Password</label>
-                </div>
-              
-             
-                <div className="form--field">
-                  <input id="email" type="email" className="form--input" />
-                  <label className="form--label"  htmlFor="email">Email</label>
-                </div>
-              
-
-              <a className="form--botton">Accedi</a>
-
-              <h5>oppure prosegui con</h5>
-
-              <a href="/auth/google" className="form--botton">Accedi con Google</a>
-
-              <button onClick={this.props.onClose} className="overlay-close">
-                X
-              </button>
+        <div className="form">
+          <div className="form--login">
+            <div className="form--title">
+              <span>Accedi per proseguire</span>
             </div>
+
+            <div className="form--field">
+              <input id="password" type="password" className="form--input" />
+              <label className="form--label" htmlFor="password">
+                Password
+              </label>
+            </div>
+
+            <div className="form--field">
+              <input id="email" type="email" className="form--input" />
+              <label className="form--label" htmlFor="email">
+                Email
+              </label>
+            </div>
+
+            {isFetching && <div style={stile}>
+                <button className="form--botton form--botton__spinning" type="submit">
+                  <span>Registering...</span>
+                </button>
+              </div>}
+            {!isFetching && <div style={stile}>
+                <button className="form--botton" type="submit">
+                  <span>Accedi</span>
+                </button>
+              </div>}
+
+              <div className="hr"><span >oppure prosegui con</span></div>
+            <div style={stile}>
+                  
+              <button onClick={redirect} className="form--botton">
+                <span>Accedi con Google</span>
+              </button>
+              
+            </div>
+            <button onClick={this.props.onClose} className="overlay-close">
+              X
+            </button>
           </div>
         </div>
-    );
+      </div>;
   }
 }
 

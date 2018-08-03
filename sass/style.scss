@@ -290,7 +290,9 @@ body {
   }
 
   &--botton span{
-      display: inline-flex
+      display: inline-flex;
+      font-size: 1.05em;
+      font-weight: 500;
   }
 
   &--botton {

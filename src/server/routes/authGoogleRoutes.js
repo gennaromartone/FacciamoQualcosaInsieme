@@ -24,10 +24,12 @@ router.get(
 
 router.get('/logout', (req,res) =>{
 	req.logout();
-	res.redirect('/').send(req.user)
+	//res.redirect('/').send(req.user)
+	res.redirect('/');
 })
 
 router.get('/current_user', (req,res,done) => {
+	console.log("USER REQ: ",req)
     res.send( req.user );
 })
 

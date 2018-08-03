@@ -10,7 +10,7 @@ export const registerUser = (values,history) => async dispatch => {
     try{
         const register = await axios.post('/api/user/register', values);
 
-        history.push('/');
+        history.push('/user-page');
         
         dispatch({ type:REGISTER_USER_BY_FORM, payload: register.data})
     }

@@ -86,9 +86,29 @@ async function compose(req,res){
 			res.send(renderFullPage(html, preloadedState, helmetData))
 }
 
+
+
 router.get('/',  (req, res) => {
 	try {
 		compose(req,res);
+		
+	} catch (error) {
+		res.status(400).send(renderFullPage('An error occured.', {}, {}));
+	}
+});
+
+router.get('/seller-page',  (req, res) => {
+	try {
+		const ret = compose(req,res);
+		
+	} catch (error) {
+		res.status(400).send(renderFullPage('An error occured.', {}, {}));
+	}
+});
+
+router.get('/user-page',  (req, res) => {
+	try {
+		const ret = compose(req,res);
 		
 	} catch (error) {
 		res.status(400).send(renderFullPage('An error occured.', {}, {}));

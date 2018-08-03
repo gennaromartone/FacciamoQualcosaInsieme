@@ -6,6 +6,13 @@ export const requireLogin = (req,res,next) => {
         // 401 HTTP Response - Unathorized
     }
 
+    // multiple files can be set
+/*res.set({
+    'content-type': 'application/json',
+    'content-length': '100',
+    'warning': "with content type charset encoding will be added by default"
+ });*/
+
     next();
 } 
 

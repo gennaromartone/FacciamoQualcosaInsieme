@@ -9,9 +9,9 @@ const router = express.Router();
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
-router.get('/getShoops/:long/:lang', (req , res) => {
+router.get('/getShoops/:long/:lang/:cat/:textSearch', (req , res) => {
 
-    Shoops.find({
+    const toFind = {
         location:{
             $near: {
                 $maxDistance: 1000,
@@ -21,7 +21,25 @@ router.get('/getShoops/:long/:lang', (req , res) => {
                 }
             }
         }
-    }).find( (err, shops ) => {
+    }
+    if( req.params.cat != -1 ){
+        toFind [_category] = req.params.cat;
+    }
+    
+    if( req.params.textSearch != '' ){
+    /* cerca nei prodotti dei negozi nome,descrizione,prezzo,immagine,dettagli */
+
+         //toFind = {...toFind, description:{$search:req.params.textSearch},
+         // _product:{name:{$search:req.params.textSearch}}}
+
+         toFind[description] =  {$search:req.params.textSearch};
+         toFind[_product] = {name:{$search:req.params.textSearch}}
+
+    }
+
+    Shoops.find({
+        toFind
+    }, (err, shops ) => {
         if( err ){
             console.error('ERROR FINDING SHOOPS: ',err);
             res.status(500).send("There was a problem finding the Shoops.");
@@ -30,6 +48,9 @@ router.get('/getShoops/:long/:lang', (req , res) => {
         else 
             res.status(200).send(shops);
     });
+
+    
+
 });
 
 router.post('/saveShoop', (req,res) => {

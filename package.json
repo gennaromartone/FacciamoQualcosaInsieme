@@ -46,6 +46,7 @@
     "webpack-merge": "^4.1.2"
   },
   "dependencies": {
+    "argon2themax": "^1.2.0",
     "axios": "^0.16.2",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",

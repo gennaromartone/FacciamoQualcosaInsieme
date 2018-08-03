@@ -30,18 +30,6 @@ class Header extends Component {
         return new Promise(resolve => resolve());//default
     }
 
-    componentWillMount() {
-
-    }
-
-    componentDidMount() {
-
-    }
-
-    componentWillUnmount() {
-
-    }
-
     setShowLoginModal(e){
         e.preventDefault()
         this.setState({
@@ -112,7 +100,7 @@ class Header extends Component {
                     </div>
                   </li>  
                   <li>
-                    <a  href="#" onClick={this.setShowLoginModal}>Be a Seller</a>
+                    <a  href="/seller-page" >Be a Seller</a>
                   </li>
                   <li>
                     <a  href="#" onClick={this.setShowRegisterModal}>Your Order</a>

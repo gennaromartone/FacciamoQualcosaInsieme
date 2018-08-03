@@ -26,7 +26,8 @@ var UserSchema = new mongoose.Schema({
       },   
       lastLogin: String,
       verified: Boolean,
-      credits: { type:Number, default:0}
+      credits: { type:Number, default:0},
+      _shoop: { type: mongoose.Schema.Types.ObjectId, ref:'Shoops', default:null}
 
 });
 mongoose.model('User', UserSchema);
